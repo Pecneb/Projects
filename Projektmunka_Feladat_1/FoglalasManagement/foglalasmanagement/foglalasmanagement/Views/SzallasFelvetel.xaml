@@ -1,0 +1,35 @@
+﻿<Window x:Class="foglalasmanagement.Views.SzallasFelvetel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:foglalasmanagement.Views"
+        mc:Ignorable="d"
+        Title="SzallasFelvetel" Height="300" Width="600">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+        <TextBox Text="Vezetéknév" x:Name="tbx_vnev" Width="150" Height="30" Grid.Row="1" Grid.Column="1" Margin="5"/>
+        <TextBox Text="Keresztnév" x:Name="tbx_knev" Width="150" Height="30" Grid.Row="2" Grid.Column="1" Margin="5"/>
+        <TextBox x:Name="tbx_azon" Grid.Row="1" Grid.Column="2" Margin="5" IsReadOnly="True"/>
+        <Button Content="Azonosito Generalasa" Grid.Row="2" Grid.Column="2" Margin="5" Click="Button_Click"/>
+        <Label Content="Dátum Kezdet:" Grid.Row="1" Grid.Column="3"/>
+        <DatePicker x:Name="dp_kezdet" Grid.Row="2" Grid.Column="3"/>
+        <Label Content="Dátum Vég:" Grid.Row="1" Grid.Column="4" />
+        <DatePicker x:Name="dp_veg" Grid.Row="2" Grid.Column="4"/>
+        <Button x:Name="btn_mentes" Content="Mentés" Grid.Row="3" Grid.Column="1" Click="btn_mentes_Click"/>
+    </Grid>
+</Window>
