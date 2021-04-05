@@ -24,44 +24,49 @@ namespace foglalasmanagement.Views
     {
         // DataParser classunk egesz jol muzsikal!!
         public string Filename { get { return "ugyfelek.txt"; } }
-        public List<Szemely> Ugyfelek { 
-            get {
-                if(File.Exists(Filename))
-                {
-                    return new DataParser(Filename).ParseToSzemely();
-                } else
-                {
-                    return new List<Szemely>();
-                }
-            } 
-        }
+        public List<Szemely> Ugyfelek { get; set; }
         public SzallasFelvetel()
         {
             InitializeComponent();
+            if (File.Exists(Filename))
+            {
+                Ugyfelek = new DataParser(Filename).ParseToSzemely();
+            } else
+            {
+                Ugyfelek = new List<Szemely>();
+            }
         }
-        
-        //Ezt a szarost kell befejezni minel elobb!!!!
+        public static string DatumToString(DateTime? datum)
+        {
+            string datum_string = "";
+            for (int j = 0; j < datum.ToString().Split(' ').Length; j++)
+            {
+                datum_string += datum.ToString().Split(' ')[j];
+            }
+            return datum_string;
+        }
         private void btn_mentes_Click(object sender, RoutedEventArgs e)
         {
             string vnev = tbx_vnev.Text;
             string knev = tbx_knev.Text;
             string azon = tbx_azon.Text;
-            string tol = dp_kezdet.SelectedDate.ToString();
-            string ig = dp_veg.SelectedDate.ToString();
+            string tol = DatumToString(dp_kezdet.SelectedDate);
+            string ig = DatumToString(dp_veg.SelectedDate);
             int i = 0;
             while(i<Ugyfelek.Count && (Ugyfelek[i].VezetekNev != vnev && Ugyfelek[i].KeresztNev != knev))
             {
                 i++;
             }
-            if(i == Ugyfelek.Count)
+            if (i == Ugyfelek.Count)
             {
-                // Valamiert index out of range exeptiont dob ki, ki kellene vizsgalni minel elobb!!!
+                new Szemely(tbx_vnev.Text, tbx_knev.Text);
                 Ugyfelek.Add(new Szemely(tbx_vnev.Text, tbx_knev.Text));
                 Ugyfelek[i].SzallasFoglalasok.Add(new SzallasFoglalas(vnev, knev, azon, tol, ig));
-            } else
+            }
+            else
             {
                 Ugyfelek[i].SzallasFoglalasok.Add(new SzallasFoglalas(vnev, knev, azon, tol, ig));
-            }            
+            }
             DataParser dp = new DataParser("ugyfelek.txt");
             dp.SzemelyToText(Ugyfelek);
             this.Close();
@@ -72,8 +77,8 @@ namespace foglalasmanagement.Views
             //Azonosito keszitese egesz jol mukodik de meg lehet rajta alakitani!
             string vnev = tbx_vnev.Text;
             string knev = tbx_knev.Text;
-            string tol = dp_kezdet.SelectedDate.ToString();
-            string ig = dp_veg.SelectedDate.ToString();
+            string tol = DatumToString(dp_kezdet.SelectedDate);
+            string ig = DatumToString(dp_veg.SelectedDate);
             tbx_azon.Text = vnev[0] + knev[0] + tol + ig + Ugyfelek.Count;
         }
     }

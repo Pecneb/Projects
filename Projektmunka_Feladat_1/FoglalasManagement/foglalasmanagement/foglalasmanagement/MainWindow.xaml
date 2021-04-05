@@ -33,8 +33,8 @@
         </Grid.RowDefinitions>
         <DockPanel Background="RoyalBlue" Grid.Row="0" Grid.Column="0" Grid.RowSpan="5">
             <StackPanel>
-                <Button Content="Foglalas Management" Height="50" Click="Button_Click"/>
-                <Button Content="Konferencia Management" Height="50" Click="Button_Click_1"/>
+                <Button x:Name="btn_Szallasfoglalasmanagement" BorderBrush="Transparent" Background="Transparent" Content="Foglalas Management" Height="50" Click="Button_Click"/>
+                <Button x:Name="btn_Konerenciafoglalasmanagement" BorderBrush="Transparent" Background="Transparent" Content="Konferencia Management" Height="50" Click="Button_Click_1"/>
             </StackPanel>
         </DockPanel>
         <ContentControl Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="4" Grid.RowSpan="5" Content="{Binding}"/>

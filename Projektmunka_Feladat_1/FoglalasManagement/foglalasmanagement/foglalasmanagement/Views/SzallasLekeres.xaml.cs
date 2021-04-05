@@ -34,7 +34,9 @@ namespace foglalasmanagement.Views
 
         private void btn_keres_Click(object sender, RoutedEventArgs e)
         {
-
+            string vnev = tbx_vnev.Text;
+            string knev = tbx_knev.Text;
+            
         }
     }
 }

@@ -29,11 +29,15 @@ namespace foglalasmanagement
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new SzallasLekeres();
+            btn_Szallasfoglalasmanagement.Background = Brushes.White;
+            btn_Konerenciafoglalasmanagement.Background = Brushes.RoyalBlue;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             DataContext = new KonferenciaLekeres();
+            btn_Szallasfoglalasmanagement.Background = Brushes.RoyalBlue;
+            btn_Konerenciafoglalasmanagement.Background = Brushes.White;
         }
     }
 }
