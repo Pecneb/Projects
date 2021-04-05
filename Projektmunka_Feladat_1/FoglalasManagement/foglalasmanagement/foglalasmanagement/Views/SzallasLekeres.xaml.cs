@@ -21,6 +21,12 @@ namespace foglalasmanagement.Views
     /// </summary>
     public partial class SzallasLekeres : UserControl
     {
+        private string Filename { get { return "ugyfelek.txt"; } }
+        public List<Szemely> Ugyfelek { get {
+                DataParser dp = new DataParser(Filename);
+                return dp.ParseToSzemely();
+            }
+        }
         public SzallasLekeres()
         {
             InitializeComponent();
@@ -34,9 +40,17 @@ namespace foglalasmanagement.Views
 
         private void btn_keres_Click(object sender, RoutedEventArgs e)
         {
-            string vnev = tbx_vnev.Text;
-            string knev = tbx_knev.Text;
-            
+            Szemely tmp_szemely = new Szemely(tbx_vnev.Text, tbx_knev.Text);
+            int tmp_index = 0;
+            int exists = tmp_szemely.PersonIndexInList(Ugyfelek, tmp_index);
+            if(exists != -1)
+            {
+                cb_foglalasok.ItemsSource = Ugyfelek[exists].SzallasFoglalasok;
+            } else
+            {
+                MessageBox.Show("A keresett ugyfelnek meg nincs foglalasa!");
+            }
+            // Meg implementalni kell hogy a ListView be bekeruljenek a foglalas adatai!
         }
     }
 }

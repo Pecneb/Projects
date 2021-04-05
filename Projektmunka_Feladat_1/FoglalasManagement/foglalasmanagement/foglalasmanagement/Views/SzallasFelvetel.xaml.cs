@@ -31,7 +31,8 @@ namespace foglalasmanagement.Views
             if (File.Exists(Filename))
             {
                 Ugyfelek = new DataParser(Filename).ParseToSzemely();
-            } else
+            }
+            else
             {
                 Ugyfelek = new List<Szemely>();
             }
@@ -52,20 +53,16 @@ namespace foglalasmanagement.Views
             string azon = tbx_azon.Text;
             string tol = DatumToString(dp_kezdet.SelectedDate);
             string ig = DatumToString(dp_veg.SelectedDate);
-            int i = 0;
-            while(i<Ugyfelek.Count && (Ugyfelek[i].VezetekNev != vnev && Ugyfelek[i].KeresztNev != knev))
+            Szemely tmp_szemely = new Szemely(tbx_vnev.Text, tbx_knev.Text);
+            int tmp_index = 0;
+            if (tmp_szemely.PersonIndexInList(Ugyfelek, tmp_index) == -1)
             {
-                i++;
-            }
-            if (i == Ugyfelek.Count)
-            {
-                new Szemely(tbx_vnev.Text, tbx_knev.Text);
                 Ugyfelek.Add(new Szemely(tbx_vnev.Text, tbx_knev.Text));
-                Ugyfelek[i].SzallasFoglalasok.Add(new SzallasFoglalas(vnev, knev, azon, tol, ig));
+                Ugyfelek[tmp_index].SzallasFoglalasok.Add(new SzallasFoglalas(vnev, knev, azon, tol, ig));
             }
             else
             {
-                Ugyfelek[i].SzallasFoglalasok.Add(new SzallasFoglalas(vnev, knev, azon, tol, ig));
+                Ugyfelek[tmp_szemely.PersonIndexInList(Ugyfelek, tmp_index)].SzallasFoglalasok.Add(new SzallasFoglalas(vnev, knev, azon, tol, ig));
             }
             DataParser dp = new DataParser("ugyfelek.txt");
             dp.SzemelyToText(Ugyfelek);
