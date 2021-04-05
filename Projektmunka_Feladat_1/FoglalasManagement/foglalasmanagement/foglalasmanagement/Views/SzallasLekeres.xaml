@@ -25,26 +25,20 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="6">
-            <Label Content="Vezetéknév:" Grid.Row="1" Grid.Column="1" Margin="0,0"/>
-        <TextBox x:Name="tbx_vnev" Width="100" Grid.Row="1" Grid.Column="2" Margin="0,0"/>
-        <Label Content="Keresztnév:" Grid.Row="1" Grid.Column="3" Margin="0,0"/>
-        <TextBox x:Name="tbx_knev" Width="100" Grid.Row="1" Grid.Column="4" Margin="0,0"/>
-        <Button x:Name="btn_keres" Width="106" Content="Keresés" Grid.Row="1" Grid.Column="5" Margin="10,0,0,0" Click="btn_keres_Click"/>
-        <Button x:Name="btn_hozzaad" Content="Foglalás felvétele" Grid.Row="1" Grid.Column="6" Margin="10,0,0,0" Click="btn_hozzaad_Click"/>
+            <Label Content="Vezetéknév:" Margin="0,0"/>
+        <TextBox x:Name="tbx_vnev" Width="100" Margin="0,0"/>
+        <Label Content="Keresztnév:" Margin="0,0"/>
+        <TextBox x:Name="tbx_knev" Width="100" Margin="0,0"/>
+        <Button x:Name="btn_keres" Width="106" Content="Keresés" Margin="10,0,0,0" Click="btn_keres_Click"/>
+        <Button x:Name="btn_hozzaad" Content="Foglalás felvétele" Margin="10,0,0,0" Click="btn_hozzaad_Click"/>
+        <Button x:Name="btn_torol" Content="Foglalás Törlése" Margin="10,0,0,0" Click="btn_hozzaad_Click"/>
         </StackPanel>
-        <ComboBox x:Name="cb_foglalasok" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="10" Height="20">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Azonosito}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-        <ListView x:Name="lv_FoglalasInfo" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="5">
+        <ListView x:Name="lv_FoglalasInfo" Grid.Row="3" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="6" Margin="10">
             <ListView.View>
                 <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="Foglalas Informacio">
-                    <GridViewColumn Header="Vezetéknév" Width="150"/>
-                    <GridViewColumn Header="Keresztnév" Width="150"/>
-                    <GridViewColumn Header="Dátum" Width="160"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Vnev}" Header="Vezetéknév" Width="150"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Knev}" Header="Keresztnév" Width="150"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Datum}" Header="Dátum" Width="160"/>
                 </GridView>
             </ListView.View>
         </ListView>

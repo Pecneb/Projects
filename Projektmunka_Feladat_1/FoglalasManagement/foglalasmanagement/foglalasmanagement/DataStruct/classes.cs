@@ -13,6 +13,12 @@ namespace foglalasmanagement.DataStruct
         public string Azonosito { get; set; }
         public string Tol { get; set; }
         public string Ig { get; set; }
+        public string Datum 
+        {
+            get {
+                return Tol + " - " + Ig;
+            }
+        }
     }
     public class SzallasFoglalas : Foglalas
     {
@@ -55,7 +61,7 @@ namespace foglalasmanagement.DataStruct
             SzallasFoglalasok = new List<SzallasFoglalas>();
             KonferenciaFoglalasok = new List<KonferenciaFoglalas>();
         }
-        public int PersonIndexInList(List<Szemely> ppl, int index)
+        public int PersonIndexInList(List<Szemely> ppl)
         {
             ///This method gives back the persons index in a given List
             ///If the person is not found the method returns -1 and
@@ -71,7 +77,6 @@ namespace foglalasmanagement.DataStruct
             }
             else
             {
-                index = i;
                 return -1;
             }
         }
@@ -97,42 +102,51 @@ namespace foglalasmanagement.DataStruct
                 if(sor[2] == "1" && sor[3] == "1")
                 {
                     users.Add(new Szemely(sor[0], sor[1]));
-                    List<string> foglalas;
-                    while(sr.ReadLine() != "Konferenciafoglalasok:")
+                    string foglalas;
+                    do
                     {
-                        foglalas = sr.ReadLine().Split(';').ToList();
-                        users[i].SzallasFoglalasok.Add(new SzallasFoglalas(users[i].VezetekNev, users[i].KeresztNev, foglalas[2], foglalas[3], foglalas[4]));
-                    }
-                    while (sr.ReadLine() != "EOF")
+                        foglalas = sr.ReadLine();
+                        if (foglalas != "EOF" && foglalas != "Szallasfoglalasok:" && foglalas != "Konferenciafoglalasok:")
+                        {
+                            users[i].SzallasFoglalasok.Add(new SzallasFoglalas(users[i].VezetekNev, users[i].KeresztNev, foglalas.Split(';').ToList()[2], foglalas.Split(';').ToList()[3], foglalas.Split(';').ToList()[4]));
+                        }
+                    } while (foglalas != "Konferenciafoglalasok:");
+                    do
                     {
-                        foglalas = sr.ReadLine().Split(';').ToList();
-                        users[i].KonferenciaFoglalasok.Add(new KonferenciaFoglalas(users[i].VezetekNev, users[i].KeresztNev, foglalas[2], foglalas[3], foglalas[4], int.Parse(foglalas[5])));
-                    }
-                } 
+                        foglalas = sr.ReadLine();
+                        if (foglalas != "EOF" && foglalas != "Szallasfoglalasok:" && foglalas != "Konferenciafoglalasok:")
+                        {
+                            users[i].KonferenciaFoglalasok.Add(new KonferenciaFoglalas(foglalas.Split(';').ToList()[0], foglalas.Split(';').ToList()[1], foglalas.Split(';').ToList()[2], foglalas.Split(';').ToList()[3], foglalas.Split(';').ToList()[4], int.Parse(foglalas.Split(';').ToList()[5])));
+                        }
+                    } while (foglalas != "EOF");
+                }
                 // Csak szallas foglalasa van
                 else if(sor[2] == "1" && sor[3] == "0")
                 {
                     users.Add(new Szemely(sor[0], sor[1]));
-                    List<string> foglalas;
-                    while (sr.ReadLine() != "EOF")
+                    string foglalas;
+                    do
                     {
-                        foglalas = sr.ReadLine().Split(';').ToList();
-                        users[i].SzallasFoglalasok.Add(new SzallasFoglalas(users[i].VezetekNev, users[i].KeresztNev, foglalas[2], foglalas[3], foglalas[4]));
-                    }
+                        foglalas = sr.ReadLine();
+                        if(foglalas != "EOF" && foglalas != "Szallasfoglalasok:" && foglalas != "Konferenciafoglalasok:")
+                        {
+                            users[i].SzallasFoglalasok.Add(new SzallasFoglalas(users[i].VezetekNev, users[i].KeresztNev, foglalas.Split(';').ToList()[2], foglalas.Split(';').ToList()[3], foglalas.Split(';').ToList()[4]));
+                        }
+                    } while (foglalas != "EOF");
                 }
                 // Csak konferenciafoglalasa van
                 else if(sor[2] == "0" && sor[3] == "1")
                 {
                     users.Add(new Szemely(sor[0], sor[1]));
-                    List<string> foglalas;
-                    while (sr.ReadLine() != "EOF")
+                    string foglalas;
+                    do
                     {
-                        foglalas = sr.ReadLine().Split(';').ToList();
-                        users[i].KonferenciaFoglalasok.Add(new KonferenciaFoglalas(users[i].VezetekNev, users[i].KeresztNev, foglalas[2], foglalas[3], foglalas[4], int.Parse(foglalas[5])));
-                    }
-                } else
-                {
-                    users.Add(new Szemely(sor[0], sor[1]));
+                        foglalas = sr.ReadLine();
+                        if (foglalas != "EOF" && foglalas != "Szallasfoglalasok:" && foglalas != "Konferenciafoglalasok:")
+                        {
+                            users[i].KonferenciaFoglalasok.Add(new KonferenciaFoglalas(foglalas.Split(';').ToList()[0], foglalas.Split(';').ToList()[1], foglalas.Split(';').ToList()[2], foglalas.Split(';').ToList()[3], foglalas.Split(';').ToList()[4], int.Parse(foglalas.Split(';').ToList()[5])));
+                        }
+                    } while (foglalas != "EOF");
                 }
                 i++;
             }
@@ -180,10 +194,6 @@ namespace foglalasmanagement.DataStruct
                         sw.WriteLine($"{f.Nev};{f.Cegnev};{f.Azonosito};{f.Tol};{f.Ig};{f.Letszam}");
                     }
                     sw.WriteLine("EOF");
-                }
-                else
-                {
-                    sw.WriteLine($"{sz.VezetekNev};{sz.KeresztNev}");
                 }
             }
             sw.Close();

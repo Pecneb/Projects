@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using foglalasmanagement.DataStruct;
+using System.IO;
 
 namespace foglalasmanagement.Views
 {
@@ -23,8 +24,14 @@ namespace foglalasmanagement.Views
     {
         private string Filename { get { return "ugyfelek.txt"; } }
         public List<Szemely> Ugyfelek { get {
-                DataParser dp = new DataParser(Filename);
-                return dp.ParseToSzemely();
+                if (File.Exists(Filename))
+                {
+                    return new DataParser(Filename).ParseToSzemely();
+                }
+                else
+                {
+                    return new List<Szemely>();
+                }
             }
         }
         public SzallasLekeres()
@@ -41,11 +48,10 @@ namespace foglalasmanagement.Views
         private void btn_keres_Click(object sender, RoutedEventArgs e)
         {
             Szemely tmp_szemely = new Szemely(tbx_vnev.Text, tbx_knev.Text);
-            int tmp_index = 0;
-            int exists = tmp_szemely.PersonIndexInList(Ugyfelek, tmp_index);
+            int exists = tmp_szemely.PersonIndexInList(Ugyfelek);
             if(exists != -1)
             {
-                cb_foglalasok.ItemsSource = Ugyfelek[exists].SzallasFoglalasok;
+                lv_FoglalasInfo.ItemsSource = Ugyfelek[exists].SzallasFoglalasok;
             } else
             {
                 MessageBox.Show("A keresett ugyfelnek meg nincs foglalasa!");
